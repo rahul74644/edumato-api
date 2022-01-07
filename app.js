@@ -7,7 +7,7 @@ var cors = require('cors')
 const bodyParser = require('body-parser')
 
 dotenv.config();
-var mongoUrl = process.env.URL;
+var mongoUrl = "mongodb+srv://edumato:edumato@cluster0.uetk6.mongodb.net/edumato?retryWrites=true&w=majority";
 var port = process.env.PORT || 5001;
 var MongoClient = mongo.MongoClient;
 var db;
@@ -17,12 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+
 // first default route
 app.get('/', (req, res) => {
     res.send("Hiii From Express")
 })
-
-
 
 
 // return all the city
@@ -36,7 +35,7 @@ app.get('/location', (req, res) => {
 
 })
 
-// // return all the mealType
+// return all the mealType
 app.get('/mealtype', (req, res) => {
     db.collection('mealtype').find().toArray((err, result) => {
         if (err) throw err;
@@ -46,12 +45,12 @@ app.get('/mealtype', (req, res) => {
 
 
 // return all the restaurants
-app.get('/resturants',(req,res) => {
-    db.collection('resturants').find().toArray((err,result) => {
-        if(err) throw err;
-        res.send(result)
-    })
-})
+// app.get('/resturants',(req,res) => {
+//     db.collection('resturants').find().toArray((err,result) => {
+//         if(err) throw err;
+//         res.send(result)
+//     })
+// })
 
 // restaurant wrt to id
 app.get('/restaurant/:id',(req,res) => {
