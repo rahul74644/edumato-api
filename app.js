@@ -18,7 +18,6 @@ var port = process.env.PORT || 5001;
 var MongoClient = mongo.MongoClient;
 var db;
 
-console.log(mongoUrl)
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -135,7 +134,7 @@ app.get('/menu/:restid', (req, res) => {
 })
 
 app.post('/menuItem', (req, res) => {
-    console.log(req.body);
+  
     db.collection('menu').find({ menu_id: { $in: req.body } }).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
@@ -191,7 +190,7 @@ const parseJson = express.json({ extended: false });
 
 app.post("/paynow", [parseUrl, parseJson], (req, res) => {
     // Route for making payment
-    console.log(">>>>", req.body)
+   
     var paymentDetails = {
         orderID: req.body.id,
         amount: req.body.cost,
@@ -236,12 +235,12 @@ app.post("/paynow", [parseUrl, parseJson], (req, res) => {
 app.post("/callback", (req, res) => {
 
     // Route for verifiying payment
-    console.log(req.body)
+ 
     // const form = new formidable.IncomingForm()
     let paytmchecksum = req.body.CHECKSUMHASH
     let params = {};
     let verifysig = checksum_lib.verifychecksum(req.body, config.PaytmConfig.key, paytmchecksum)
-    console.log(verifysig)
+   
 
     if (verifysig) {
         params['MID'] = req.body.MID;
@@ -284,7 +283,7 @@ app.post("/callback", (req, res) => {
             post_req.end();
         })
     } else {
-        console.log('checksum mismatch')
+        
     }
 
 
